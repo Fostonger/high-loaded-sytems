@@ -17,4 +17,8 @@ public class UserEntity {
     private String familyName;
     @Column(nullable = false)
     private Integer isuNumber;
+    @Column(nullable = false)
+    private String username;
+    @Column(nullable = false)
+    private String password;
 }

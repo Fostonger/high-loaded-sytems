@@ -8,4 +8,6 @@ public class User {
     private String name;
     private String familyName;
     private Integer isuNumber;
+    private String username;
+    private String encodedPassword;
 }
