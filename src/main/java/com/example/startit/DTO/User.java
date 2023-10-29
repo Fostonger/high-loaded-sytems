@@ -9,5 +9,5 @@ public class User {
     private String familyName;
     private Integer isuNumber;
     private String username;
-    private String encodedPassword;
+    private String password;
 }

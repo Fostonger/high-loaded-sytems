@@ -1,18 +1,31 @@
 package com.example.startit.service;
 
+import com.example.startit.entity.CategoryEntity;
+import com.example.startit.entity.LocationEntity;
+import com.example.startit.entity.StatusEntity;
 import com.example.startit.entity.UserEntity;
 import com.example.startit.exception.BadRegistrationDataException;
 import com.example.startit.exception.PasswordIncorrectException;
 import com.example.startit.exception.UserDoesNotExistException;
+import com.example.startit.repository.CategoriesRepo;
+import com.example.startit.repository.LocationRepo;
+import com.example.startit.repository.StatusRepo;
 import com.example.startit.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class UserService {
 
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private StatusRepo catRepository;
+
 
     public UserEntity registration(UserEntity user) throws BadRegistrationDataException {
         if (userRepo.findByUsername(user.getUsername()) != null) {

@@ -1,5 +1,6 @@
 package com.example.startit.controller;
 
+import com.example.startit.entity.CredentialsEntity;
 import com.example.startit.entity.UserEntity;
 import com.example.startit.exception.BadRegistrationDataException;
 import com.example.startit.exception.PasswordIncorrectException;
@@ -21,7 +22,7 @@ public class UserController {
     public ResponseEntity registration(@RequestBody UserEntity user) {
         try {
             userService.registration(user);
-            return ResponseEntity.ok(true);
+            return ResponseEntity.ok(user);
         } catch (BadRegistrationDataException e) {
             return ResponseEntity.ok(e.getMessage());
         } catch (Exception e) {
@@ -30,10 +31,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody UserEntity user) {
+    public ResponseEntity login(@RequestBody CredentialsEntity user) {
         try {
-            userService.login(user);
-            return ResponseEntity.ok(true);
+            UserEntity loggedUser = userService.login(user.getUser());
+            return ResponseEntity.ok(loggedUser);
         } catch (PasswordIncorrectException | UserDoesNotExistException e) {
             return ResponseEntity.ok("Введён неверный логин или пароль");
         } catch (Exception e) {
