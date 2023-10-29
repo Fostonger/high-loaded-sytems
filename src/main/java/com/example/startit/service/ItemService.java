@@ -1,8 +1,10 @@
 package com.example.startit.service;
 
+import com.example.startit.DTO.SearchFilter;
 import com.example.startit.entity.*;
 import com.example.startit.exception.BadDataException;
 import com.example.startit.repository.*;
+import com.example.startit.utils.ItemSpecifications;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,7 @@ public class ItemService {
 
     private static String UPLOAD_DIR = "uploads/";
     public PhotoEntity uploadImage(MultipartFile img, long imgSeqNumber, Long itemId) throws IOException {
-        Path path = Paths.get(UPLOAD_DIR + imgSeqNumber + img.getOriginalFilename());
+        Path path = Paths.get(UPLOAD_DIR + imgSeqNumber + itemId + img.getOriginalFilename());
         Files.createDirectories(path.getParent());
         Files.write(path, img.getBytes());
 
@@ -65,5 +67,19 @@ public class ItemService {
         item.setSeller(seller);
 
         return itemRepo.save(item);
+    }
+
+    public ItemEntity[] getItems(SearchFilter filter) throws BadDataException {
+        return itemRepo.findAll(ItemSpecifications.withFilter(filter)).toArray( new ItemEntity[0]);
+    }
+
+    public String getImagePath(Long itemId) throws IOException {
+        PhotoEntity photoData = photoRepo.findByItem_Id(itemId);
+        return photoData.getPhotoPath();
+    }
+
+    public byte[] getImage(String path) throws IOException {
+        Path imagePath = Paths.get(path);
+        return Files.readAllBytes(imagePath);
     }
 }
