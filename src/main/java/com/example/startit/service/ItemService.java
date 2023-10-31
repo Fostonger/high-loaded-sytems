@@ -23,14 +23,6 @@ public class ItemService {
     private PhotoRepo photoRepo;
     @Autowired
     private ItemRepo itemRepo;
-    @Autowired
-    private UserRepo userRepo;
-    @Autowired
-    private CategoriesRepo categoriesRepo;
-    @Autowired
-    private LocationRepo locationRepo;
-    @Autowired
-    private StatusRepo statusRepo;
     @PersistenceContext
     private EntityManager entityManager;
 
